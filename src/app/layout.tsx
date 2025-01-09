@@ -1,8 +1,7 @@
+import React from 'react';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
-import Header from '@/components/ui/header';
-import Sidebar from '@/components/ui/sidebar';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -17,14 +16,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
-        <Header />
-        <Sidebar />
-        <main className="main-content">
-          {children}
-        </main>
+    <html lang="en" className="bg-pink-50">
+      <body className={`${inter.className} min-h-screen`}>
+        {children}
       </body>
     </html>
   );
-}
+} 

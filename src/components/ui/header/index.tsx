@@ -1,26 +1,18 @@
-'use client';
-
-import { useEffect, useState } from 'react';
-import { initializeUser } from '@/lib/utils/user';
+import React from 'react';
+import { useUserStore } from '../../../stores/user-store';
 
 export default function Header() {
-  const [user, setUser] = useState<{ username: string; userId: string } | null>(null);
-
-  useEffect(() => {
-    try {
-      const currentUser = initializeUser();
-      setUser(currentUser);
-    } catch (error) {
-      console.error('Failed to initialize user:', error);
-    }
-  }, []);
+  const { currentUser } = useUserStore();
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 h-14 bg-primary border-b border-secondary flex items-center justify-between px-4">
-      <div className="w-32"></div>
-      <h1 className="text-xl font-bold">ChatGenius</h1>
-      <div className="w-32 text-right">
-        {user ? user.username : 'Loading...'}
+    <header className="h-16 bg-indigo-600 text-white flex items-center justify-between px-6 border-b-2 border-black">
+      <h1 className="text-2xl font-bold">
+        ChatGenius
+      </h1>
+      <div className="flex items-center space-x-2">
+        <span className="text-sm">
+          {currentUser.name}
+        </span>
       </div>
     </header>
   );

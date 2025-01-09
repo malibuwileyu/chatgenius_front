@@ -14,19 +14,35 @@ chatgenius/
 ```
 src/
 ├── app/                    # Next.js App Router
-│   ├── (main)/            # Main app routes
+│   ├── (auth)/            # Auth-protected routes
 │   │   └── channels/      # Channel pages
-│   │       ├── [id]/
-│   │       │   ├── page.tsx
+│   │       ├── [id]/      # Individual channel view
+│   │       │   ├── page.tsx   # Channel messages view
 │   │       │   └── loading.tsx
-│   │       └── page.tsx
+│   │       └── page.tsx   # Channels list view
 │   ├── api/               # API routes
-│   │   ├── channels/
-│   │   │   ├── [id]/
-│   │   │   └── route.ts
-│   │   └── messages/
-│   │       ├── [id]/
-│   │       └── route.ts
+│   │   ├── chat/          # Chat-related endpoints
+│   │   │   └── channels/
+│   │   │       ├── route.ts   # GET (list), POST (create)
+│   │   │       └── [channelId]/
+│   │   │           ├── route.ts   # GET, PUT, DELETE channel
+│   │   │           ├── messages/
+│   │   │           │   ├── route.ts   # GET (list), POST (create)
+│   │   │           │   ├── [messageId]/
+│   │   │           │   │   └── route.ts   # PUT, DELETE message
+│   │   │           │   └── search/
+│   │   │           │       └── route.ts   # GET search messages
+│   │   │           ├── members/
+│   │   │           │   ├── route.ts   # GET (list), POST (add)
+│   │   │           │   └── [userId]/
+│   │   │           │       └── route.ts   # DELETE member
+│   │   │           ├── presence/
+│   │   │           │   └── route.ts   # GET online users
+│   │   │           └── typing/
+│   │   │               └── route.ts   # GET typing users
+│   │   ├── health/
+│   │   │   └── route.ts  # Health check endpoint
+│   │   └── route.ts      # API documentation endpoint
 │   ├── layout.tsx
 │   └── page.tsx
 ├── components/            # React components
@@ -41,13 +57,18 @@ src/
 │   │       ├── index.tsx
 │   │       └── styles.ts
 │   └── chat/             # Chat components
-│       ├── channel-list/
-│       │   ├── index.tsx
+│       ├── channel/
+│       │   ├── channel-list.tsx
 │       │   ├── channel-item.tsx
+│       │   ├── channel-members.tsx
 │       │   └── styles.ts
-│       └── message-thread/
-│           ├── index.tsx
-│           ├── message-item.tsx
+│       ├── message/
+│       │   ├── message-thread.tsx
+│       │   ├── message-item.tsx
+│       │   └── styles.ts
+│       └── presence/
+│           ├── typing-indicator.tsx
+│           ├── online-status.tsx
 │           └── styles.ts
 ├── lib/                  # Utility functions
 │   ├── utils/           # General utilities
@@ -55,17 +76,19 @@ src/
 │   │   └── validation.ts
 │   ├── api/             # API clients
 │   │   ├── channels.ts
-│   │   └── messages.ts
+│   │   ├── messages.ts
+│   │   └── presence.ts
 │   └── hooks/           # Custom hooks
 │       ├── useChannel.ts
-│       └── useMessage.ts
+│       ├── useMessage.ts
+│       └── usePresence.ts
 ├── stores/              # Zustand stores
 │   ├── chat-store.ts
 │   └── ui-store.ts
 ├── types/               # TypeScript types
 │   ├── chat.ts
 │   └── ui.ts
-└── styles/              # Global styles
+└── styles/             # Global styles
     ├── globals.css
     └── themes/
         ├── light.ts
@@ -81,6 +104,8 @@ tests/
 │   └── hooks/
 ├── integration/           # Integration tests
 │   ├── api/
+│   │   ├── channels/
+│   │   └── messages/
 │   └── features/
 └── e2e/                   # End-to-end tests
     └── flows/

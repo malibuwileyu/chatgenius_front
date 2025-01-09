@@ -1,5 +1,84 @@
 # Implementation Guide - MVP (Real-time Chat & Channels)
 
+## API Specification
+
+### REST Endpoints
+
+#### Authentication
+```
+POST   /api/auth/register     - Register new user
+POST   /api/auth/login        - Login user
+POST   /api/auth/logout       - Logout user
+POST   /api/auth/refresh      - Refresh JWT token
+```
+
+#### User Management
+```
+GET    /api/users             - List users
+POST   /api/users             - Create user
+GET    /api/users/{id}        - Get user details
+PUT    /api/users/{id}        - Update user
+DELETE /api/users/{id}        - Delete user
+GET    /api/users/{id}/status - Get user online status
+```
+
+#### Channel Management
+```
+GET    /api/channels              - List all channels
+POST   /api/channels              - Create new channel
+GET    /api/channels/{id}         - Get channel details
+PUT    /api/channels/{id}         - Update channel
+DELETE /api/channels/{id}         - Delete channel
+GET    /api/channels/{id}/members - List channel members
+POST   /api/channels/{id}/members - Add member to channel
+DELETE /api/channels/{id}/members - Remove member from channel
+```
+
+#### Message Management
+```
+GET    /api/channels/{id}/messages     - Get channel messages
+POST   /api/channels/{id}/messages     - Send message to channel
+GET    /api/messages/{id}              - Get message details
+PUT    /api/messages/{id}              - Update message
+DELETE /api/messages/{id}              - Delete message
+POST   /api/messages/{id}/reactions    - Add reaction to message
+DELETE /api/messages/{id}/reactions    - Remove reaction
+```
+
+### WebSocket Events
+
+#### Client Events
+```
+channel:join     - Join a channel
+channel:leave    - Leave a channel
+message:send     - Send a message
+typing:start     - Start typing indicator
+typing:stop      - Stop typing indicator
+presence:update  - Update user presence
+reaction:add     - Add reaction to message
+reaction:remove  - Remove reaction from message
+```
+
+#### Server Events
+```
+channel:joined     - Channel join confirmation
+channel:left      - Channel leave confirmation
+message:received  - New message notification
+typing:updated    - Typing status update
+presence:updated  - User presence update
+error:occurred    - Error notification
+reaction:updated  - Reaction update notification
+```
+
+#### WebSocket Topics
+```
+/topic/channel.{channelId}         - Channel-specific messages
+/topic/user.{userId}               - User-specific notifications
+/topic/presence.{channelId}        - Channel presence updates
+/topic/typing.{channelId}          - Typing indicators
+/topic/error                       - Error broadcasts
+```
+
 ## Core Features
 
 ### Real-time Chat
