@@ -165,16 +165,16 @@ export default function Home(): ReactElement {
                 <div className="text-gray-400 text-center">No messages yet</div>
               ) : (
                 activeChannelMessages.map(message => (
-                  <div key={message.id} className="flex flex-col">
+                  <div key={message.id} className="flex flex-col bg-white rounded-lg shadow p-4 hover:shadow-md transition-shadow">
                     <div className="flex items-baseline space-x-2">
                       <span className="font-semibold">
-                        {message.userId ? `User #${message.userId.slice(0, 6)}` : 'Unknown User'}
+                        {message.username || 'Unknown User'}
                       </span>
                       <span className="text-xs text-gray-500">
                         {new Date(message.createdAt).toLocaleTimeString()}
                       </span>
                     </div>
-                    <p className="mt-1">{message.content}</p>
+                    <p className="mt-1 text-gray-700">{message.content}</p>
                   </div>
                 ))
               )}

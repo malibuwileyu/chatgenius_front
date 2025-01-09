@@ -8,6 +8,7 @@ interface Message {
   content: string;
   channelId: string;
   userId: string;
+  username: string;
   type: MessageType;
   createdAt: string;
   updatedAt?: string;
@@ -81,7 +82,18 @@ export const messagesApi = {
     }
 
     console.log('Message sent successfully:', data);
-    return data;
+    // Map the response to match our Message interface with username
+    return {
+      id: data.id,
+      content: data.content,
+      channelId: data.channel.id,
+      userId: data.user.id,
+      username: data.user.username,
+      type: data.type as MessageType,
+      createdAt: data.createdAt,
+      updatedAt: data.updatedAt,
+      threadId: data.thread?.id
+    };
   },
 
   getChannelMessages: async (channelId: string): Promise<Message[]> => {
@@ -128,11 +140,12 @@ export const messagesApi = {
         content: msg.content,
         channelId: msg.channel.id,
         userId: msg.user.id,
+        username: msg.user.username,
         type: msg.type as MessageType,
         createdAt: msg.createdAt,
         updatedAt: msg.updatedAt,
         threadId: msg.thread?.id
-      }));
+      })).sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
                       
       console.log('Parsed channel messages:', messages);
       return messages;
