@@ -49,20 +49,26 @@ const CreateChannel: React.FC<CreateChannelProps> = ({ onSubmit, onCancel }) => 
           <label className="inline-flex items-center">
             <input
               type="radio"
+              id="channelTypePublic"
+              name="channelType"
               className="form-radio text-indigo-600"
               checked={channelType === 'PUBLIC'}
               onChange={() => setChannelType('PUBLIC')}
               disabled={isLoading}
+              aria-label="Public channel type"
             />
             <span className="ml-2">Public</span>
           </label>
           <label className="inline-flex items-center">
             <input
               type="radio"
+              id="channelTypePrivate"
+              name="channelType"
               className="form-radio text-indigo-600"
               checked={channelType === 'PRIVATE'}
               onChange={() => setChannelType('PRIVATE')}
               disabled={isLoading}
+              aria-label="Private channel type"
             />
             <span className="ml-2">Private</span>
           </label>
@@ -72,16 +78,22 @@ const CreateChannel: React.FC<CreateChannelProps> = ({ onSubmit, onCancel }) => 
       <div className="flex justify-end space-x-3">
         <button
           type="button"
+          id="cancelButton"
+          name="cancelButton"
           onClick={onCancel}
           className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50"
           disabled={isLoading}
+          aria-label="Cancel channel creation"
         >
           Cancel
         </button>
         <button
           type="submit"
+          id="createButton"
+          name="createButton"
           className="px-4 py-2 text-sm font-medium text-white bg-indigo-600 rounded-md hover:bg-indigo-700 disabled:opacity-50"
           disabled={isLoading || !channelName.trim()}
+          aria-label="Create new channel"
         >
           {isLoading ? 'Creating...' : 'Create Channel'}
         </button>
