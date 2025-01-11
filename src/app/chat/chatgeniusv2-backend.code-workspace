@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "../../../../chatgeniusv2-backend"
+		},
+		{
+			"path": "../../.."
+		}
+	],
+	"settings": {
+		"java.configuration.updateBuildConfiguration": "interactive",
+		"java.compile.nullAnalysis.mode": "automatic"
+	}
+}

@@ -1,26 +1,26 @@
-'use client';
-import React from 'react';
-import { Inter } from 'next/font/google';
-import { usePathname } from 'next/navigation';
-import { useTokenRefresh } from '../hooks/useTokenRefresh';
-import './globals.css';
+import type { Metadata } from "next";
+import { Inter } from "next/font/google";
+import "./globals.css";
 
-const inter = Inter({ subsets: ['latin'] });
+const inter = Inter({ subsets: ["latin"] });
+
+export const metadata: Metadata = {
+  title: "ChatGenius",
+  description: "Real-time chat application with AI capabilities",
+};
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode
 }) {
-  useTokenRefresh();
-  const pathname = usePathname();
-  const isAuthPage = pathname === '/login' || pathname === '/register';
-
   return (
     <html lang="en">
       <body className={inter.className}>
-        {children}
+        <main className="min-h-screen bg-gray-100">
+          {children}
+        </main>
       </body>
     </html>
   );
-} 
+}
